@@ -9,7 +9,7 @@ function App() {
   const [formData, setFormData] = useState({ song: '', artist: '' });
 
   const handleSubmit = (event) => {
-    event.preventDefault(); // Prevent the form from submitting normally
+    event.preventDefault();
 
     axios.get('http://localhost:3000/lyrics/', formData)
     .then((res) => {
