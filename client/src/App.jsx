@@ -1,6 +1,8 @@
-import Header from "./Header.jsx"
 import { useState } from "react";
 import axios from 'axios'
+
+import Header from "./Header.jsx"
+import Viewer from "./Viewer.jsx"
 
 function App() {
 
@@ -29,6 +31,7 @@ function App() {
   return (
     <div className="w-screen h-screen bg-red-300">
       <Header handleSubmit={handleSubmit} handleChange={handleChange} formData={formData} setFormData={setFormData}/>
+      <Viewer />
     </div>
   )
 }
