@@ -9,10 +9,6 @@ function App() {
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent the form from submitting normally
 
-    console.log('event', event)
-    // const formData = new FormData(event.target); // Create a new FormData object from the form data
-
-    console.log('form', formData)
     axios.get('http://localhost:3000/lyrics/', formData)
     .then((res) => {
       console.log(res)
