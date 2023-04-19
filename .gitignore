@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Python packages
+python/*.jpg
+python/*.txt
+!python/requirements.txt
+python/__pycache__
+python/lyriclens

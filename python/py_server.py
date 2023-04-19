@@ -1,9 +1,12 @@
 from wsgiref.simple_server import make_server
+import plotly_chart
 
 def web_app(environment, response):
     status = '200 ok steve'
     headers = [('Content-type', 'text/html; charset=utf-8')]
     response(status, headers)
+
+    plotly_chart.main()
 
     return [b'<strong>Hello World I just created my first WSGI</strong>']
 
