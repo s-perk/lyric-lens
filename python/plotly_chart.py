@@ -1,5 +1,6 @@
 import pandas as pd
 import plotly.express as px
+import plotly.offline
 from plotly import __version__
 # from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
 # import plotly.graph_objects as go
@@ -16,12 +17,18 @@ def file_to_array(file_name):
       song_string = song_string + line
 
   f.close()
-  print('song string', song_string)
 
+  song_ary = lyrics_to_array(song_string)
+
+  return song_ary
+
+
+# I: Raw string of all lyrics, newlines, etc.
+# O: 1-dimensional array of strings (each string a lyric)
+def lyrics_to_array(song_string):
   # String of all special characters that could be in song
   # most of this is produced from string.punctuation
   special_characters = '!#"$%&()*+,-./:;<=>?@[\]^_`{|}~'
-
 
 
   #Use translate to remove special characters (fastest way to do this according to https://stackoverflow.com/questions/265960/best-way-to-strip-punctuation-from-a-string)
@@ -40,7 +47,6 @@ def file_to_array(file_name):
   song_ary = [i for i in song_ary if i]
 
   return song_ary
-
 
 def create_graph_dataframe(array, exclude_words):
   x_ary = []
@@ -99,10 +105,10 @@ def create_scatter_plot(df):
       color='count',
       color_continuous_scale='ylorrd', #these are the colors of the dot. All available colors: https://plotly.com/python/builtin-colorscales/
       hover_name='word',
-      size_max=100, #max size of the dots
-      width=8000,
-      height=8000,
-      range_color = [0,8], #Adjust the end of the range for brighter colors
+      size_max=8, #max size of the dots
+      width=800,
+      height=800,
+      range_color = [0, 8], #Adjust the end of the range for brighter colors
       render_mode='svg'
       )
 
@@ -115,20 +121,22 @@ def create_scatter_plot(df):
 
 
 
-def main():
+def main(lyrics):
   print('do stuff here!')
 
-  # **** PARSE SONG LYRICS *****
+  # **** OLD PARSE SONG LYRICS *****
   # song_name = "Here Is Where"
-  song_name = "All Too Well (10 min)"
-  #song_name = "Can't Get You Outta My Head"
+  # song_name = "Can't Get You Outta My Head"
+  # song_name = "All Too Well (10 min)"
+  # file_name = song_name + '.txt'
+  # song_ary = file_to_array(file_name)
 
-  file_name = song_name + '.txt'
 
   exclude_words = ['the','a','to','and','it','i','was','you']
 
+  song_ary = lyrics_to_array(lyrics)
 
-  song_ary = file_to_array(file_name)
+  print('=========NEW ARRAY', song_ary)
 
   df, word_count = create_graph_dataframe(song_ary, exclude_words)
 
@@ -136,10 +144,13 @@ def main():
 
   # Merge counts onto graph dataframe
   df = df.merge(df_word_count, how='left', on='word')
-  print(df)
 
   fig = create_scatter_plot(df)
 
   # fig.show()
-  fig.write_image(song_name +'.jpg')
+  # fig.write_image(song_name +'.jpg')
+  plotly.offline.plot(fig, filename='file.html')
+  # div = plotly.offline.plot(fig, include_plotlyjs=False, output_type='div')
+  div = plotly.io.to_html(fig, include_plotlyjs=False, full_html=False)
+  return div
 

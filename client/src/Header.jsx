@@ -6,9 +6,6 @@ import axios from 'axios'
 
 function Header({handleSubmit, handleChange, formData, setFormData}) {
 
-
-
-
   return (
     <div className="flex h-max navbar bg-gray-800 sticky top-0 z-50 drop-shadow-[0_5px_3px_rgba(0,0,0,0.25)]">
       <div className='flex basis-1/2 p-1'>

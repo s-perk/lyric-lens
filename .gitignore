@@ -26,6 +26,7 @@ dist-ssr
 # Python packages
 python/*.jpg
 python/*.txt
+python/file.html
 !python/requirements.txt
 python/__pycache__
 python/lyriclens
