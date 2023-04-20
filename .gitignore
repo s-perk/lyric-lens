@@ -11,6 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
 
 # Editor directories and files
 .vscode/*
@@ -26,7 +27,9 @@ dist-ssr
 # Python packages
 python/*.jpg
 python/*.txt
+python/output.html
 python/file.html
+file.html
 !python/requirements.txt
 python/__pycache__
 python/lyriclens
