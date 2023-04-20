@@ -1,5 +1,6 @@
 import pandas as pd
 import plotly.express as px
+import plotly.offline
 from plotly import __version__
 # from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
 # import plotly.graph_objects as go
@@ -16,7 +17,6 @@ def file_to_array(file_name):
       song_string = song_string + line
 
   f.close()
-  print('song string', song_string)
 
   # String of all special characters that could be in song
   # most of this is produced from string.punctuation
@@ -99,10 +99,10 @@ def create_scatter_plot(df):
       color='count',
       color_continuous_scale='ylorrd', #these are the colors of the dot. All available colors: https://plotly.com/python/builtin-colorscales/
       hover_name='word',
-      size_max=100, #max size of the dots
-      width=8000,
-      height=8000,
-      range_color = [0,8], #Adjust the end of the range for brighter colors
+      size_max=20, #max size of the dots
+      width=800,
+      height=800,
+      range_color = [0,20], #Adjust the end of the range for brighter colors
       render_mode='svg'
       )
 
@@ -136,10 +136,12 @@ def main():
 
   # Merge counts onto graph dataframe
   df = df.merge(df_word_count, how='left', on='word')
-  print(df)
 
   fig = create_scatter_plot(df)
 
   # fig.show()
-  fig.write_image(song_name +'.jpg')
+  # fig.write_image(song_name +'.jpg')
+  plotly.offline.plot(fig, filename='file.html')
+  div = plotly.offline.plot(fig, include_plotlyjs=False, output_type='div')
+  return div
 

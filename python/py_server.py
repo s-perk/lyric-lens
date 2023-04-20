@@ -6,9 +6,10 @@ def web_app(environment, response):
     headers = [('Content-type', 'text/html; charset=utf-8')]
     response(status, headers)
 
-    plotly_chart.main()
-
-    return [b'<strong>Hello World I just created my first WSGI</strong>']
+    div = plotly_chart.main()
+    # df = plotly_chart.main()
+    # return [b'<strong>Hello World I just created my first WSGI</strong>']
+    return [f'{div}'.encode('utf-8')]
 
 with make_server('', 8000, web_app) as server:
     print('Serving on port 8000...\nVisit http://127.0.0.1:8000\nTo kill the server enter Ctrl+C')

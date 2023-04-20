@@ -6,9 +6,11 @@ import dotenv from 'dotenv'
 import controller from './controllers/index.js'
 // import controller from '../controllers/postgres'
 
-// Heroku API info
-const HEROKU_API_END_POINT = 'https://spotify-lyric-api.herokuapp.com/'
-const HEROKU_HEADERS = {
+// END POINT INFO
+const SPOTIFY_API_END_POINT = 'https://spotify-lyric-api.herokuapp.com/'
+const PYTHON_SERVER_END_POINT = 'http://localhost:8000/'
+
+const HEADERS = {
   "Authorization" : `${process.env.API_KEY}`
 }
 
@@ -23,9 +25,10 @@ router.all('*', (req, res, next) => {
 
   // Set options with our authorization and any passed in query parameters
   let options = {
-    headers: HEROKU_HEADERS,
+    headers: HEADERS,
     params: req.query,
-    endpoint: HEROKU_API_END_POINT
+    spotifyEndpoint: SPOTIFY_API_END_POINT,
+    pythonEndpoint: PYTHON_SERVER_END_POINT
   }
 
   // Attach to our request object
