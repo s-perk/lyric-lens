@@ -6,7 +6,21 @@ def web_app(environment, response):
     headers = [('Content-type', 'text/html; charset=utf-8')]
     response(status, headers)
 
-    div = plotly_chart.main()
+    # the environment variable CONTENT_LENGTH may be empty or missing
+    try:
+        request_body_size = int(environment.get('CONTENT_LENGTH', 0))
+    except (ValueError):
+        request_body_size = 0
+
+    request_body = environment['wsgi.input'].read(request_body_size)
+    # d = parse_qs(request_body)
+    # print(request_body)
+    lyrics = request_body.decode('utf-8')
+    print('decoded', lyrics)
+
+
+
+    div = plotly_chart.main(lyrics)
     # df = plotly_chart.main()
     # return [b'<strong>Hello World I just created my first WSGI</strong>']
     return [f'{div}'.encode('utf-8')]

@@ -18,10 +18,17 @@ def file_to_array(file_name):
 
   f.close()
 
+  song_ary = lyrics_to_array(song_string)
+
+  return song_ary
+
+
+# I: Raw string of all lyrics, newlines, etc.
+# O: 1-dimensional array of strings (each string a lyric)
+def lyrics_to_array(song_string):
   # String of all special characters that could be in song
   # most of this is produced from string.punctuation
   special_characters = '!#"$%&()*+,-./:;<=>?@[\]^_`{|}~'
-
 
 
   #Use translate to remove special characters (fastest way to do this according to https://stackoverflow.com/questions/265960/best-way-to-strip-punctuation-from-a-string)
@@ -40,7 +47,6 @@ def file_to_array(file_name):
   song_ary = [i for i in song_ary if i]
 
   return song_ary
-
 
 def create_graph_dataframe(array, exclude_words):
   x_ary = []
@@ -99,10 +105,10 @@ def create_scatter_plot(df):
       color='count',
       color_continuous_scale='ylorrd', #these are the colors of the dot. All available colors: https://plotly.com/python/builtin-colorscales/
       hover_name='word',
-      size_max=20, #max size of the dots
+      size_max=8, #max size of the dots
       width=800,
       height=800,
-      range_color = [0,20], #Adjust the end of the range for brighter colors
+      range_color = [0, 8], #Adjust the end of the range for brighter colors
       render_mode='svg'
       )
 
@@ -115,20 +121,22 @@ def create_scatter_plot(df):
 
 
 
-def main():
+def main(lyrics):
   print('do stuff here!')
 
-  # **** PARSE SONG LYRICS *****
+  # **** OLD PARSE SONG LYRICS *****
   # song_name = "Here Is Where"
-  song_name = "All Too Well (10 min)"
-  #song_name = "Can't Get You Outta My Head"
+  # song_name = "Can't Get You Outta My Head"
+  # song_name = "All Too Well (10 min)"
+  # file_name = song_name + '.txt'
+  # song_ary = file_to_array(file_name)
 
-  file_name = song_name + '.txt'
 
   exclude_words = ['the','a','to','and','it','i','was','you']
 
+  song_ary = lyrics_to_array(lyrics)
 
-  song_ary = file_to_array(file_name)
+  print('=========NEW ARRAY', song_ary)
 
   df, word_count = create_graph_dataframe(song_ary, exclude_words)
 

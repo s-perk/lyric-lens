@@ -14,11 +14,11 @@ export default  {
     axios.get(`${req.options.spotifyEndpoint}/?trackid=${req.body.trackid}`, req.options)
     .then ((result) => {
       // Array of array of words
-      let words = spotifyFunctions.getLyrics(result.data)
+      let words = spotifyFunctions.getLyricsString(result.data)
       return words
     })
     .then((words) => {
-      axios.get(`${req.options.pythonEndpoint}`)
+      axios.post(`${req.options.pythonEndpoint}`, words)
         .then((data) => {
           console.log('got the data!')
           res.send(data.data)
