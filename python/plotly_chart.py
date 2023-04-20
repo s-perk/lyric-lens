@@ -142,6 +142,7 @@ def main():
   # fig.show()
   # fig.write_image(song_name +'.jpg')
   plotly.offline.plot(fig, filename='file.html')
-  div = plotly.offline.plot(fig, include_plotlyjs=False, output_type='div')
+  # div = plotly.offline.plot(fig, include_plotlyjs=False, output_type='div')
+  div = plotly.io.to_html(fig, include_plotlyjs=False, full_html=False)
   return div
 

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import parse from 'html-react-parser';
 
-function Viewer({viewDiv}) {
+function ViewerTwo({viewDiv}) {
 
 
   return (
@@ -12,11 +12,14 @@ function Viewer({viewDiv}) {
     //   {parse("<div className='text-green-500 p-4'>hello</div>")}
     // </div>
 
-    <div dangerouslySetInnerHTML={{__html: viewDiv}}>
-
-    </div>
+    <iframe id="inlineFrameExample"
+      title="Inline Frame Example"
+      width="1200"
+      height="800"
+      src="./python/file.html">
+    </iframe>
 
   )
 }
 
-export default Viewer
+export default ViewerTwo
