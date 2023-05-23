@@ -41,12 +41,15 @@ const methods = {
     }
   },
 
-  getTrackID: async (req, res) => {
+  search: async (req, res) => {
     //request token using getAuth() function
     const access_token = await methods.getAuth();
     console.log(access_token);
 
-    const api_url = `http://api.spotify.com/v1/search?q=remaster%2520track%3AStay%2520artist%3ATaylor%2520Swift&type=album`;
+
+    console.log('Requesting details for artist: ', req.body.artist, ' song: ', req.body.song)
+
+    const api_url = `http://api.spotify.com/v1/search?q=remaster%2520track%3AStay%2520artist%3ATaylor%2520Swift&type=track`;
     //console.log(api_url);
 
     axios.get(api_url, {
@@ -55,7 +58,31 @@ const methods = {
       }
     })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
+        let data = response.data.tracks.items
+        data.forEach(item => {
+          console.log(`${item.artists[0].name} - ${item.name} - ${item.id}`)
+        })
+        res.send(data[0].id)
+      })
+      .catch((err) => {
+        console.log('Spotify Error:', err)
+      })
+  },
+
+
+  getTrack: async (req, res) => {
+
+    const api_url = `http://api.spotify.com/v1/search?q=remaster%2520track%3AStay%2520artist%3ATaylor%2520Swift&type=track`;
+    //console.log(api_url);
+
+    axios.get(api_url, {
+      headers: {
+        'Authorization': `Bearer ${access_token}`
+      }
+    })
+      .then((response) => {
+        // console.log(response.data);
         res.send(response.data)
       })
       .catch((err) => {

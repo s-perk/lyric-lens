@@ -50,13 +50,13 @@ router.all('*', (req, res, next) => {
 
 
 // ----- Track -----
-router.get('/search/', controller.spotify.getTrackID)
+router.get('/search/', controller.spotify.search)
 
-// // ----- Lyrics -----
-router.get('/lyrics/', controller.lyrics.get)
+// ----- Lyrics -----
+router.post('/lyrics/', controller.lyrics.get)
 
 
-router.get('/lyrics/:trackid', controller.lyrics.get)
+router.post('/lyrics/:trackid', controller.lyrics.get)
 
 
 
