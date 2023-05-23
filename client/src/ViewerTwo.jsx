@@ -5,18 +5,18 @@ function ViewerTwo({viewDiv}) {
 
 
   return (
-    // <div className='w-full h-full grid' id='viewer'>
-    //   <div className='self-center justify-self-center p-2 border-2 border-black'>
+    // <div className='grid w-full h-full' id='viewer'>
+    //   <div className='self-center p-2 border-2 border-black justify-self-center'>
     //     Viewer
     //   </div>
-    //   {parse("<div className='text-green-500 p-4'>hello</div>")}
+    //   {parse("<div className='p-4 text-green-500'>hello</div>")}
     // </div>
 
     <iframe id="inlineFrameExample"
       title="Inline Frame Example"
-      width="1200"
-      height="800"
-      src="./python/file.html">
+      width="1750"
+      height="1100"
+      src="http://localhost:8050">
     </iframe>
 
   )

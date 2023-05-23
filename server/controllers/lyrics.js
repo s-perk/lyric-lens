@@ -3,12 +3,15 @@ import spotifyFunctions from '../../utilities/spotify.js'
 
 export default  {
 
-  get: function (req, res) {
+  get: async (req, res) => {
 
 
     req.body['artist'] = req.query['artist']
     req.body['song'] = req.query['song']
-    req.body.trackid = '5enxwA8aAbwZbf5qCHORXi'
+
+    req.body.trackid = '5enxwA8aAbwZbf5qCHORXi' // Taylor Swift - All Too Well
+    // req.body.trackid = '6BOh92QF6cAvNjH9SRYJxL' // Beyonce - Formation
+
 
     // Spotify Lyrics endpoint: 'https://spotify-lyric-api.herokuapp.com/'
     axios.get(`${req.options.spotifyEndpoint}/?trackid=${req.body.trackid}`, req.options)

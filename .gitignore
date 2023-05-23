@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 .env
+**/zz
+zz*
+
 
 # Editor directories and files
 .vscode/*
@@ -33,3 +36,4 @@ file.html
 !python/requirements.txt
 python/__pycache__
 python/lyriclens
+*.pkl

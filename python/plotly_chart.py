@@ -107,8 +107,8 @@ def create_scatter_plot(df, params):
       color_continuous_scale=params['color'], #these are the colors of the dot. All available colors: https://plotly.com/python/builtin-colorscales/
       hover_name='word',
       size_max=params['bubble_max'], #max size of the dots
-      width=800,
-      height=800,
+      width=1000,
+      height=1000,
       range_color = [0, params['max']], #Adjust the end of the range for brighter colors
       render_mode='svg'
       )
@@ -123,7 +123,7 @@ def create_scatter_plot(df, params):
 
 
 def main(lyrics):
-  print('do stuff here!')
+  print('doing stuff on Python server')
 
   # **** OLD PARSE SONG LYRICS *****
   # song_name = "Here Is Where"
@@ -148,20 +148,20 @@ def main(lyrics):
   # I tried to keep this simple for now to keep the graph looking fairly good for a wide range of inputs
   #
   params = {
-    'color': 'ylorrd', #these are the colors of the dot. All available colors: https://plotly.com/python/builtin-colorscales/
+    'color': 'Turbo', #these are the colors of the dot. All available colors: https://plotly.com/python/builtin-colorscales/
     'max': df_word_count.head(5)['count'].values[0],
-    'bubble_max': df_word_count.head(5)['count'].values.mean()
+    'bubble_max': df_word_count.head(10)['count'].values.mean()
   }
 
 
-  fig = create_scatter_plot(df, params)
+  pd.to_pickle(df, './python/plotly_data.pkl')
+  # fig = create_scatter_plot(df, params)
 
 
   # Output figure
-  # fig.show()
   # fig.write_image(song_name +'.jpg')
-  plotly.offline.plot(fig, filename='python/file.html')
+  # plotly.offline.plot(fig, filename='python/file.html')
   # div = plotly.offline.plot(fig, include_plotlyjs=False, output_type='div')
-  div = plotly.io.to_html(fig, include_plotlyjs=False, full_html=False)
-  return div
+  # div = plotly.io.to_html(fig, include_plotlyjs=False, full_html=False)
+  return df
 

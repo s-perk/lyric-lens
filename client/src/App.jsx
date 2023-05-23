@@ -40,14 +40,14 @@ function App() {
         formData={formData}
         setFormData={setFormData}
       />
-      <Viewer
-        plotData={plotData}
-        viewDiv={viewDiv}
-      />
-      {/* <ViewerTwo
+      {/* <Viewer
         plotData={plotData}
         viewDiv={viewDiv}
       /> */}
+      <ViewerTwo
+        plotData={plotData}
+        viewDiv={viewDiv}
+      />
     </div>
   )
 }
