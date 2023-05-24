@@ -14,7 +14,9 @@ function App() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    axios.get('http://localhost:3000/lyrics/', formData)
+    console.log('form data!', formData)
+
+    axios.post('http://localhost:3000/lyrics/', formData)
     .then((res) => {
       console.log(res.data)
       setViewDiv(res.data)
@@ -40,14 +42,14 @@ function App() {
         formData={formData}
         setFormData={setFormData}
       />
-      <Viewer
-        plotData={plotData}
-        viewDiv={viewDiv}
-      />
-      {/* <ViewerTwo
+      {/* <Viewer
         plotData={plotData}
         viewDiv={viewDiv}
       /> */}
+      <ViewerTwo
+        plotData={plotData}
+        viewDiv={viewDiv}
+      />
     </div>
   )
 }

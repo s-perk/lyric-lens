@@ -94,8 +94,9 @@ def create_word_count_dataframe(word_count):
 
   return df_word_count
 
-def create_scatter_plot(df):
+def create_scatter_plot(df, params):
 
+  print('==============PARAMS!', params)
   # https://plotly.com/python-api-reference/generated/plotly.express.scatter
   fig = px.scatter(
       df,
@@ -103,12 +104,12 @@ def create_scatter_plot(df):
       y='y',
       size='count',
       color='count',
-      color_continuous_scale='ylorrd', #these are the colors of the dot. All available colors: https://plotly.com/python/builtin-colorscales/
+      color_continuous_scale=params['color'], #these are the colors of the dot. All available colors: https://plotly.com/python/builtin-colorscales/
       hover_name='word',
-      size_max=8, #max size of the dots
-      width=800,
-      height=800,
-      range_color = [0, 8], #Adjust the end of the range for brighter colors
+      size_max=params['bubble_max'], #max size of the dots
+      width=1000,
+      height=1000,
+      range_color = [0, params['max']], #Adjust the end of the range for brighter colors
       render_mode='svg'
       )
 
@@ -122,7 +123,7 @@ def create_scatter_plot(df):
 
 
 def main(lyrics):
-  print('do stuff here!')
+  print('Doing pandas stuff to song lyrics...')
 
   # **** OLD PARSE SONG LYRICS *****
   # song_name = "Here Is Where"
@@ -136,8 +137,6 @@ def main(lyrics):
 
   song_ary = lyrics_to_array(lyrics)
 
-  print('=========NEW ARRAY', song_ary)
-
   df, word_count = create_graph_dataframe(song_ary, exclude_words)
 
   df_word_count = create_word_count_dataframe(word_count)
@@ -145,12 +144,24 @@ def main(lyrics):
   # Merge counts onto graph dataframe
   df = df.merge(df_word_count, how='left', on='word')
 
-  fig = create_scatter_plot(df)
+  # Define parameters for our graph (color, color scale, bubble size)
+  # I tried to keep this simple for now to keep the graph looking fairly good for a wide range of inputs
+  #
+  params = {
+    'color': 'Turbo', #these are the colors of the dot. All available colors: https://plotly.com/python/builtin-colorscales/
+    'max': df_word_count.head(5)['count'].values[0],
+    'bubble_max': df_word_count.head(10)['count'].values.mean()
+  }
 
-  # fig.show()
+
+  pd.to_pickle(df, './python/plotly_data.pkl')
+  # fig = create_scatter_plot(df, params)
+
+
+  # Output figure
   # fig.write_image(song_name +'.jpg')
-  plotly.offline.plot(fig, filename='file.html')
+  # plotly.offline.plot(fig, filename='python/file.html')
   # div = plotly.offline.plot(fig, include_plotlyjs=False, output_type='div')
-  div = plotly.io.to_html(fig, include_plotlyjs=False, full_html=False)
-  return div
+  # div = plotly.io.to_html(fig, include_plotlyjs=False, full_html=False)
+  return df
 

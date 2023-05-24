@@ -49,11 +49,14 @@ router.all('*', (req, res, next) => {
 // -------------------------------------
 
 
-// // ----- Lyrics -----
-router.get('/lyrics/', controller.lyrics.get)
+// ----- Track -----
+router.get('/search/', controller.spotify.search)
+
+// ----- Lyrics -----
+router.post('/lyrics/', controller.lyrics.get)
 
 
-router.get('/lyrics/:trackid', controller.lyrics.get)
+router.post('/lyrics/:trackid', controller.lyrics.get)
 
 
 
