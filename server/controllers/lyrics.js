@@ -12,9 +12,10 @@ export default  {
 
 
     // Spotify Lyrics endpoint: 'https://spotify-lyric-api.herokuapp.com/'
-    req.body.trackid = await spotifyController.search(req, res)
+    const trackID = await spotifyController.search(req, res)
+    console.log('Retrieved Track ID: ',trackID)
 
-    axios.get(`${req.options.spotifyEndpoint}/?trackid=${req.body.trackid}`, req.options)
+    axios.get(`${req.options.spotifyEndpoint}/?trackid=${trackID}`, req.options)
     .then ((result) => {
       // Array of array of words
       let words = spotifyFunctions.getLyricsString(result.data)

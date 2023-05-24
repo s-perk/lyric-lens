@@ -9,8 +9,11 @@ const client_secret = process.env.SPOTIFY_CLIENT_SECRET; // Your secret
 // const auth_token = Buffer.from(`${client_id}:${client_secret}`, 'utf-8').toString('base64');
 // console.log(auth_token)
 
-const methods = {
+const characters = {
+  ' ': '%2520'
+}
 
+const methods = {
 
   getAuth: async () => {
     try{
@@ -33,7 +36,9 @@ const methods = {
       const response = await axios.post(token_url, data, headers)
 
       //return access token
-      return response.data.access_token;
+      return new Promise(resolve => {
+        resolve(response.data.access_token)
+      })
 
     } catch(error){
       //on fail, log the error in console
@@ -44,15 +49,18 @@ const methods = {
   search: async (req, res) => {
     //request token using getAuth() function
     const access_token = await methods.getAuth();
-    console.log(access_token);
+    console.log('Access Token: ', access_token);
+    console.log('Requesting details for... artist:', req.body.artist, ' song:', req.body.song)
+
+    // Set up Spotify URL
+    req.body.artist = req.body.artist.replace(' ','%2520') + '%2520'
+    req.body.song = req.body.song.replace(' ','%2520')
+
+    const api_url = `http://api.spotify.com/v1/search?q=remaster%2520track%3A${req.body.song}artist%3A${req.body.song}&type=track`;
+    //const api_url = `http://api.spotify.com/v1/search?q=remaster%2520track%3AStay%2520artist%3ATaylor%2520Swift&type=track`;
 
 
-    console.log('Requesting details for artist: ', req.body.artist, ' song: ', req.body.song)
-
-    const api_url = `http://api.spotify.com/v1/search?q=remaster%2520track%3AStay%2520artist%3ATaylor%2520Swift&type=track`;
-    //console.log(api_url);
-
-    axios.get(api_url, {
+    const trackID = await axios.get(api_url, {
       headers: {
         'Authorization': `Bearer ${access_token}`
       }
@@ -63,11 +71,13 @@ const methods = {
         data.forEach(item => {
           console.log(`${item.artists[0].name} - ${item.name} - ${item.id}`)
         })
-        res.send(data[0].id)
+        return data[0].id
       })
       .catch((err) => {
         console.log('Spotify Error:', err)
       })
+
+      return trackID
   },
 
 

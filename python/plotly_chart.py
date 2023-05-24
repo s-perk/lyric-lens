@@ -123,7 +123,7 @@ def create_scatter_plot(df, params):
 
 
 def main(lyrics):
-  print('doing stuff on Python server')
+  print('Doing pandas stuff to song lyrics...')
 
   # **** OLD PARSE SONG LYRICS *****
   # song_name = "Here Is Where"
